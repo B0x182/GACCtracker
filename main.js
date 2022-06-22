@@ -61,16 +61,21 @@
 	}
 	
 	
-	function getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset){
+	function getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset, m1Asset, m2Asset){
 	
 	m1_text = "unknown";
 	m2_text = "unknown";
+	m1_img = "images/m1.png"
+	m2_img = "images/m2.png"
 	
 	if(m1){
 		m1_text = "M1 Used"
 		
 		if(m1Num){
 		  m1_text += " (# " + m1Num + ")";
+		}
+		if(m1Asset){
+			m1_img = m1Asset.image_preview_url;
 		}
 	}
 	else{
@@ -81,7 +86,10 @@
 		m2_text = "M2 Used";
 		
 		if(m2Num){
-		  m1_text += " (# " + m1Num + ")";
+		  m2_text += " (# " + m2Num + ")";
+		}
+		if(m2Asset){
+			m2_img = m2Asset.image_preview_url;
 		}
 		
 	}
@@ -98,7 +106,7 @@
 				  GACC #${apeId}<br>
 				</span>
 				
-	<img src="${apeAsset.image_preview_url}" style="height: 150px;"  alt="..." >
+			<img src="${apeAsset.image_preview_url}" style="height: 150px;"  alt="..." >
 				
 			</div>
 			
@@ -106,15 +114,17 @@
 			
 			 <div class="row">
 			   <div class="col">
-				<img src="images/m1.png"  style="height: 100px;" alt="m1 image" >
-				  <br><span>${m1_text}</span>
+			    <span>${m1_text}</span><br>
+				<img src="${m1_img}"  style="height: 100px;" alt="m1 image" >
+				 
 			   </div>
 			  </div>
 			  
 			<div class="row">
 			   <div class="col">
-				<img src="images/m2.png"  style="height: 100px;" alt="m2 image" >
-				<br><span>${m2_text}</span>
+			   <span>${m2_text}</span><br>
+				<img src="${m2_img}"  style="height: 100px;" alt="m2 image" >
+				
 			  </div>
 			 </div>
 			  	
@@ -130,25 +140,28 @@
 	
 	try {
         
-		apeAsset = await fetchOSasset(apeId);
+		apeAsset = await fetchGaccOSasset(apeId);
 		
 		m1 = await hasApeBeenMutatedWithType(1, apeId);
 		var m1Num;
+		var m1Asset;
 		if(m1){
 			
 			 m1Num = await getMutantIdForApeAndSerumCombination(apeId, 1)
+			 m1Asset = await fetchMaccOSasset(m1Num);
 		}
 		
 	 m2 = await hasApeBeenMutatedWithType(2, apeId);
 	 var m2Num;
-	 
+	 var m2Asset;
 	 if(m2){
 			
-			 m2Num = await getMutantIdForApeAndSerumCombination(apeId, 1)
+			 m2Num = await getMutantIdForApeAndSerumCombination(apeId, 2)
+			  m2Asset = await fetchMaccOSasset(m2Num);
 		}
 	 
 	 
-	 return getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset);
+	 return getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset, m1Asset, m2Asset);
     } catch (e) {
         return e;
 	}
@@ -199,7 +212,7 @@
 	}
 	
 	
-	async function fetchOSasset(apeId){
+	async function fetchGaccOSasset(apeId){
 
 	var asset;		
 	
@@ -215,6 +228,22 @@
 	return asset;	
 	}
 	
+	
+	async function fetchMaccOSasset(apeId){
+
+	var asset;		
+	
+		await fetch('https://api.opensea.io/api/v1/asset/0xad0db7368cdfbd3153f7dfaca51a78eeb39f6d71/' + apeId)
+		 .then(result1 => result1.json())
+		 .then((output1) => {
+        
+			asset = output1;
+
+		}).catch(err => console.error(err));
+
+
+	return asset;	
+	}
 	
 
 	
