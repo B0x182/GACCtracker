@@ -101,12 +101,12 @@
 			
 		return `
 		<div class="row align-items-center">
-			<div class="col ">
-				<span>
-				  GACC #${apeId}<br>
-				</span>
+			<div class="col ">				
 				
 			<img src="${apeAsset.image_preview_url}" style="height: 150px;"  alt="..." >
+				<span>
+				 <br>GACC #${apeId}
+				</span>
 				
 			</div>
 			
@@ -114,17 +114,17 @@
 			
 			 <div class="row">
 			   <div class="col">
-			    <span>${m1_text}</span><br>
+			    
 				<img src="${m1_img}"  style="height: 100px;" alt="m1 image" >
-				 
+				 <br><span>${m1_text}</span>
 			   </div>
 			  </div>
 			  
 			<div class="row">
 			   <div class="col">
-			   <span>${m2_text}</span><br>
+			   
 				<img src="${m2_img}"  style="height: 100px;" alt="m2 image" >
-				
+				<br><span>${m2_text}</span>
 			  </div>
 			 </div>
 			  	
