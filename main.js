@@ -8,6 +8,15 @@
 	window.onload = function(){
 	
 	 document.getElementById("src-btn").addEventListener("click", hasApeMutated, false);
+	 
+	  totalApesMutated().then((n) => {	
+		
+		document.getElementById("numSpinner").remove();	
+		document.getElementById("numMutates").innerHTML= n;
+			
+		 
+		});
+
 			
 	}
 	
@@ -52,23 +61,32 @@
 	}
 	
 	
-	function getResultDivHTML(apeId, m1, m2){
+	function getResultDivHTML(apeId, m1, m2, m1Num, m2Num){
 	
 	m1_text = "unknown";
 	m2_text = "unknown";
 	
 	if(m1){
-		m1_text = "Used";
+		m1_text = "M1 Used"
+		
+		if(m1Num){
+		  m1_text += " (# " + m1Num + ")";
+		}
 	}
 	else{
-		m1_text = "Available"
+		m1_text = "M1 Available"
 	}
 	
 	if(m2){
-		m2_text = "Used";
+		m2_text = "M2 Used";
+		
+		if(m2Num){
+		  m1_text += " (# " + m1Num + ")";
+		}
+		
 	}
 	else{
-		m2_text = "Available"
+		m2_text = "M2 Available";
 	}
 	
 	
@@ -86,14 +104,14 @@
 			 <div class="row">
 			   <div class="col">
 				<img src="images/m1.png"  style="height: 100px;" alt="m1 image" >
-				  <span>${m1_text}</span>
+				  <br><span>${m1_text}</span>
 			   </div>
 			  </div>
 			  
 			<div class="row">
 			   <div class="col">
 				<img src="images/m2.png"  style="height: 100px;" alt="m2 image" >
-				 <span>${m2_text}</span>
+				<br><span>${m2_text}</span>
 			  </div>
 			 </div>
 			  	
@@ -108,10 +126,24 @@
 	
 	
 	try {
-        m1 = await hasApeBeenMutatedWithType(1, apeId);
+        
+		m1 = await hasApeBeenMutatedWithType(1, apeId);
+		var m1Num;
+		if(m1){
+			
+			 m1Num = await getMutantIdForApeAndSerumCombination(apeId, 1)
+		}
+		
 	 m2 = await hasApeBeenMutatedWithType(2, apeId);
+	 var m2Num;
 	 
-	 return getResultDivHTML(apeId, m1, m2);
+	 if(m2){
+			
+			 m2Num = await getMutantIdForApeAndSerumCombination(apeId, 1)
+		}
+	 
+	 
+	 return getResultDivHTML(apeId, m1, m2, m1Num, m2Num);
     } catch (e) {
         return e;
 	}
@@ -125,11 +157,40 @@
 
 			await _contract.methods.hasApeBeenMutatedWithType(type, apeId).call().then(function(result){
 				
-				console.log("hasApeBeenMutatedWithType:" + result);
 				mutated = result;
     
 			}).catch(err => console.error(err));
 			
 	  return mutated;
 	}
+	
+	async function getMutantIdForApeAndSerumCombination(apeId, serumTypeId){
+	
+	
+	var mutated; 
+
+			await _contract.methods.getMutantIdForApeAndSerumCombination(apeId, serumTypeId).call().then(function(result){
+				
+				mutated = result;
+    
+			}).catch(err => console.error(err));
+			
+	  return mutated;
+	}
+	
+	
+	async function totalApesMutated(){
+	
+	
+	var num; 
+
+			await _contract.methods.totalApesMutated().call().then(function(result){
+				
+				num = result;
+    
+			}).catch(err => console.error(err));
+			
+	  return num;
+	}
+	
 	
