@@ -61,7 +61,7 @@
 	}
 	
 	
-	function getResultDivHTML(apeId, m1, m2, m1Num, m2Num){
+	function getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset){
 	
 	m1_text = "unknown";
 	m2_text = "unknown";
@@ -89,14 +89,17 @@
 		m2_text = "M2 Available";
 	}
 	
-	
+		imgId = apeId + 1;
+			
 		return `
 		<div class="row align-items-center">
 			<div class="col ">
 				<span>
-				  GACC <br>
-				  #${apeId}
+				  GACC #${apeId}<br>
 				</span>
+				
+	<img src="${apeAsset.image_preview_url}" style="height: 150px;"  alt="..." >
+				
 			</div>
 			
 			<div class="col">
@@ -127,6 +130,8 @@
 	
 	try {
         
+		apeAsset = await fetchOSasset(apeId);
+		
 		m1 = await hasApeBeenMutatedWithType(1, apeId);
 		var m1Num;
 		if(m1){
@@ -143,7 +148,7 @@
 		}
 	 
 	 
-	 return getResultDivHTML(apeId, m1, m2, m1Num, m2Num);
+	 return getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset);
     } catch (e) {
         return e;
 	}
@@ -192,5 +197,26 @@
 			
 	  return num;
 	}
+	
+	
+	async function fetchOSasset(apeId){
+
+	var asset;		
+	
+		await fetch('https://api.opensea.io/api/v1/asset/0x4b103d07c18798365946e76845edc6b565779402/' + apeId)
+		 .then(result1 => result1.json())
+		 .then((output1) => {
+        
+			asset = output1;
+
+		}).catch(err => console.error(err));
+
+
+	return asset;	
+	}
+	
+	
+
+	
 	
 	
