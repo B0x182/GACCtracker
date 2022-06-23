@@ -4,15 +4,47 @@
 	_contract = new _web3.eth.Contract(_abi, _address);
 	
 	
+	const _abi2 = JSON.parse('[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_baseURI\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"_baseURI\",\"type\":\"string\"}],\"name\":\"SetBaseURI\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"values\",\"type\":\"uint256[]\"}],\"name\":\"TransferBatch\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"TransferSingle\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"value\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"URI\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"accounts\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"}],\"name\":\"balanceOfBatch\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"typeId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"burnTokenAddress\",\"type\":\"address\"}],\"name\":\"burnSerumForAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"mintBatch\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256[]\",\"name\":\"ids\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeBatchTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"mutationContractAddress\",\"type\":\"address\"}],\"name\":\"setMutationContractAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"}],\"name\":\"setName\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_baseURI\",\"type\":\"string\"}],\"name\":\"updateBaseUri\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"typeId\",\"type\":\"uint256\"}],\"name\":\"uri\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"validSerumTypes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]');
+    _contract2 =  new _web3.eth.Contract(_abi2, "0xb9655f835418fb64b63f934acb745d12d810fedb");
+
+	legendaryGrandpas = [0,1,2,3,4,5,6,7,8,9,156,576,1713,2976,3023,3622,3767,3867];
 	
 	window.onload = function(){
 	
 	 document.getElementById("src-btn").addEventListener("click", hasApeMutated, false);
+	 // set spinner
+		document.getElementById("statsDiv").innerHTML = getSpinnerHTML();
 	 
-	  totalApesMutated().then((n) => {	
+	 
+	 getSerumBurnEvents().then((events) => {	
 		
-		document.getElementById("numSpinner").remove();	
-		document.getElementById("numMutates").innerHTML= n;
+		
+		var numM1 = 0;
+         var numM2 = 0;
+         var numM3 = 0;
+                               
+         for (var i = 0; i < events.length; i++) 
+            {
+            
+			if(events[i].returnValues.id === "1"){
+                                               
+              numM1 += parseInt(events[i].returnValues.value);
+               }
+                                               
+                if(events[i].returnValues.id === "2"){
+                                               
+                  numM2 += parseInt(events[i].returnValues.value);
+               }
+                                               
+            if(events[i].returnValues.id === "69"){
+                                               
+               numM3 += parseInt(events[i].returnValues.value);
+             }
+                                               
+           }
+
+		
+		document.getElementById("statsDiv").innerHTML= getStatsDivHTML(numM1, numM2, numM3)
 			
 		 
 		});
@@ -34,7 +66,7 @@
 		}
 		
 		const parsed = parseInt(gaccId);
-		if (isNaN(parsed)  || !(parsed >= 1 && parsed <= 5000) ) 
+		if (isNaN(parsed)  || !(parsed >= 0 && parsed <= 4999) ) 
 		{ 
 		 document.getElementById("resultDiv").innerHTML = "<span class=\"bayc-color\">" + gaccId + " is not a valid GACC number</span>";
 			return;
@@ -60,6 +92,33 @@
 		`;
 	}
 	
+	function getStatsDivHTML(numM1, numM2, numM3){
+	
+
+		return `
+			 <div class="row text-center bayc-color">
+            <div class="col-sm-4">
+			  <h4> M1 drunk: ${numM1} </h4>
+			
+            </div>
+			<div class="col-sm-4">
+	
+			   <h4>M2 drunk: ${numM2}</h4>
+				
+            </div>
+			
+			
+            <div class="col-sm-4">
+				<h4>M3 drunk: ${numM3}</h4>
+            </div>
+			</div>
+			`;
+	}
+	
+	 function getLegendaryMutantId(apeId)
+    {
+        return (apeId * 2) + 1 + 4999;
+    }
 	
 	function getResultDivHTML(apeId, m1, m2, m1Num, m2Num, apeAsset, m1Asset, m2Asset){
 	
@@ -134,6 +193,43 @@
 		`;
 	}
 	
+	function getResultDivHTMLforLegendary(apeId, apeAsset, minted, mutantId, mutantAsset){
+		
+		
+		var mutant_t = "";
+		
+		if(minted){
+			
+			mutant_t = "<img src=\"" +  mutantAsset.image_preview_url +"\" style=\"height: 100px;\"  alt=\"...\" >";
+			mutant_t += "<br>Legendary Grandpas cannot mutated with serum. This one has was mutated" + " (# " + mutantId+ ")";
+			
+		}
+		else{
+			mutant_t += "Legendary Grandpas cannot mutated with serum. This one has not been muated yet.";
+		}
+		
+		return `
+		<div class="row align-items-center">
+			<div class="col ">				
+				
+			<img src="${apeAsset.image_preview_url}" style="height: 150px;"  alt="..." >
+				<span>
+				 <br>GACC #${apeId}
+				</span>
+				
+			</div>
+			
+			<div class="col">
+			
+			${mutant_t}
+			
+			
+			  	
+			  
+			</div>
+		</div>
+		`;
+	}
 	
 	async function hasApeBeenMutated(apeId){
 	
@@ -142,15 +238,35 @@
         
 		apeAsset = await fetchGaccOSasset(apeId);
 		
+		
+		// legendaryGrandpas
+		for ( i = 0; i < legendaryGrandpas.length; i++) {
+            if (apeId == legendaryGrandpas[i]) {
+              
+				
+				mutantId = getLegendaryMutantId(apeId);
+				minted = await isMinted(mutantId);
+				var mutantAsset;
+				
+				if(minted){
+					mutantAsset = await fetchMaccOSasset(mutantId);
+				}
+				
+				return getResultDivHTMLforLegendary(apeId, apeAsset, minted, mutantId, mutantAsset);
+            }
+		}
+		// serum m1
 		m1 = await hasApeBeenMutatedWithType(1, apeId);
 		var m1Num;
 		var m1Asset;
+		
 		if(m1){
 			
 			 m1Num = await getMutantIdForApeAndSerumCombination(apeId, 1)
 			 m1Asset = await fetchMaccOSasset(m1Num);
 		}
 		
+		// serum m2
 	 m2 = await hasApeBeenMutatedWithType(2, apeId);
 	 var m2Num;
 	 var m2Asset;
@@ -196,6 +312,20 @@
 	  return mutated;
 	}
 	
+	async function isMinted(apeId){
+	
+	
+	var minted; 
+
+			await _contract.methods.isMinted(apeId).call().then(function(result){
+				
+				minted = result;
+    
+			}).catch(err => console.error(err));
+			
+	  return minted;
+	}
+	
 	
 	async function totalApesMutated(){
 	
@@ -210,6 +340,32 @@
 			
 	  return num;
 	}
+	
+	
+	async function getSerumBurnEvents(){
+                                
+     var e;
+                               
+      await _contract2.getPastEvents('TransferSingle',
+          {
+             filter: {
+                       to: '0x0000000000000000000000000000000000000000'
+					},             
+               fromBlock: 0,
+             toBlock: 'latest',
+           },
+            (err, events) => {
+                                            
+             e = events;
+          
+		  });
+                               
+       return e;
+                               
+      }
+                
+                
+
 	
 	
 	async function fetchGaccOSasset(apeId){
