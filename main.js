@@ -26,8 +26,13 @@
 	 
 	 // set spinner
 	 document.getElementById("statsDiv").innerHTML = getSpinnerHTML();
+	 document.getElementById("latestDiv").innerHTML = getSpinnerHTML();
 	 // get stats
 	 getSerumStats();
+	
+	// get latest mutants
+	 getLatestMutations(10);
+	 	
 	
 	}
 	
@@ -54,6 +59,39 @@
 			searchForMACC(id);
 		}
 		
+	}
+	
+	//
+	function toggle(){
+		
+		var x = document.getElementById("searchDiv");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+			x.style.display = "none";
+			}
+		
+	var l = document.getElementById("latestBtn");
+			if (l.style.display === "none") {
+				l.style.display = "block";
+			} else {
+			l.style.display = "none";
+			}		
+		
+	var y = document.getElementById("latestDiv");
+			if (y.style.display === "none") {
+				y.style.display = "block";
+			} else {
+			y.style.display = "none";
+			}		
+	
+	var b = document.getElementById("backBtn");
+			if (b.style.display === "none") {
+				b.style.display = "block";
+			} else {
+			b.style.display = "none";
+			}		
+	
 	}
 	
 	//
@@ -104,10 +142,10 @@
 
 				if(minted){
 					mutantAsset = await fetchMaccOSasset(mutantId);
-					return getResultDiv2ImgHTML(apeAsset.image_preview_url, "GACC #" + apeId, mutantAsset.image_preview_url, "MACC #" + mutantId)
+					return getResultDiv2ImgHTML(apeAsset.image_preview_url, "GACC #" + apeId, apeAsset.permalink,  mutantAsset.image_preview_url, "MACC #" + mutantId, mutantAsset.permalink)
 				}
 				
-				return getResultDiv1ImgHTML(apeAsset.image_preview_url, "Legendary GACC #" + apeId,  "Legendary Grandpas cannot mutated with serum. This one has not been created yet.");
+				return getResultDiv1ImgHTML(apeAsset.image_preview_url, "Legendary GACC #" + apeId, apeAsset.permalink,  "Legendary Grandpas cannot mutated with serum. This one has not been created yet.");
             }
 		}
 		
@@ -117,6 +155,7 @@
 		var m1Asset;
 		m1_txt = "M1 Available";
 		m1_img  = "images/m1.jpg";
+		m1_link = "";
 		
 		
 		if(m1){
@@ -125,7 +164,8 @@
 			 m1Asset = await fetchMaccOSasset(m1Num);
 			 
 			 m1_txt = "M1 used: #" + m1Num;
-					m1_img  = m1Asset.image_preview_url;
+			 m1_img  = m1Asset.image_preview_url;
+			 m1_link = m1Asset.permalink;
 		}
 		
 		
@@ -135,6 +175,7 @@
 	   var m2Asset;
 	   m2_txt = "M2 Available";
 		m2_img  = "images/m2.jpg";
+		m2_link = "";
 	 
 	    if(m2){
 			
@@ -143,12 +184,13 @@
 			
 			m2_txt = "M2 used: #" + m2Num;
 			m2_img  = m2Asset.image_preview_url;
+			m2_link = m2Asset.permalink;
 		}
 	 
 	 
-	 return getResultDiv3ImgHTML(apeAsset.image_preview_url, "GACC #" + apeId,
-					m1_img, m1_txt,
-					m2_img, m2_txt
+	 return getResultDiv3ImgHTML(apeAsset.image_preview_url, "GACC #" + apeId, apeAsset.permalink,
+					m1_img, m1_txt, m1_link,
+					m2_img, m2_txt, m2_link
 					);
     
 	} catch (e) {
@@ -228,7 +270,7 @@
 			// get os asset 
 				maccAsset = await fetchMaccOSasset(maccId);
 				
-				return getResultDiv1ImgHTML(maccAsset.image_preview_url, "MACC #" + maccId,  "This mutant does not have an original grandpa.");
+				return getResultDiv1ImgHTML(maccAsset.image_preview_url, "MACC #" + maccId, maccAsset.permalink, "This mutant does not have an original grandpa.");
 		}
 		// mutant 
 		else{
@@ -245,7 +287,7 @@
 					gaccId = _legendary_MACC_2_GACC['id' + maccId];		
 					
 					gaccAsset = await fetchGaccOSasset(gaccId);
-					return getResultDiv2ImgHTML(maccAsset.image_preview_url, "MACC #" + maccId, gaccAsset.image_preview_url, "Legendary GACC #" + gaccId);
+					return getResultDiv2ImgHTML(maccAsset.image_preview_url, "MACC #" + maccId, maccAsset.permalink, gaccAsset.image_preview_url, "Legendary GACC #" + gaccId, gaccAsset.permalink);
 					
 				}
 				else{
@@ -259,10 +301,10 @@
 				if(minted){
 					
 					gaccAsset = await fetchMaccOSasset(maccId);
-					return getResultDiv1ImgHTML(maccAsset.image_preview_url, "MACC #" + maccId,  "Mega Mutant.");
+					return getResultDiv1ImgHTML(maccAsset.image_preview_url, "MACC #" + maccId, maccAsset.permalink, "Mega Mutant.");
 				}
 				else{
-					return getResultDiv1ImgHTML("images/m3.jpg", "MACC #" + maccId,  "This mega mutant was not minted yet.");
+					return getResultDiv1ImgHTML("images/m3.jpg", "MACC #" + maccId, "", "This mega mutant was not minted yet.");
 				}
 			}
 			
@@ -285,6 +327,7 @@
 	 
 					m2_txt = "M2 Available";
 					m2_img  = "images/m2.jpg";
+					m2_link = "";
 					
 					if(m2){
 			
@@ -293,12 +336,13 @@
 					
 					m2_txt = "M2 used: #" + m2Num;
 					m2_img  = m2Asset.image_preview_url;
+					m2_link = m2Asset.permalink;
 					
 					}
 					
-					return getResultDiv3ImgHTML(maccAsset.image_preview_url, "M1 used: #" + maccId,
-					gaccAsset.image_preview_url, "GACC #" + gaccId,
-					m2_img, m2_txt
+					return getResultDiv3ImgHTML(maccAsset.image_preview_url, "M1 used: #" + maccId, maccAsset.permalink,
+					gaccAsset.image_preview_url, "GACC #" + gaccId, gaccAsset.permalink,
+					m2_img, m2_txt, m2_link
 					);
 					
 				}
@@ -309,6 +353,7 @@
 					
 					m1_txt = "M1 Available";
 					m1_img  = "images/m1.jpg";
+					m1_link = "";
 					
 					// serum m1
 					m1 = await hasApeBeenMutatedWithType(1, gaccId);
@@ -322,12 +367,13 @@
 					
 					m1_txt = "M1 used: #" + m1Num;
 					m1_img  = m1Asset.image_preview_url;
+					m1_link = m2Asset.permalink;
 					
 					}
 					
-					return getResultDiv3ImgHTML(maccAsset.image_preview_url, "M2 used: #" + maccId,
-					gaccAsset.image_preview_url, "GACC #" + gaccId,
-					m1_img, m1_txt
+					return getResultDiv3ImgHTML(maccAsset.image_preview_url, "M2 used: #" + maccId, maccAsset.permalink,
+					gaccAsset.image_preview_url, "GACC #" + gaccId, gaccAsset.permalink,
+					m1_img, m1_txt, m1_link
 					);
 					
 				}
@@ -336,11 +382,11 @@
 			{	
 				
 				if(muntantType === 'm1'){
-					return getResultDiv1ImgHTML("images/m1.jpg", "MACC #" + maccId,  "This mutant was not minted yet.");
+					return getResultDiv1ImgHTML("images/m1.jpg", "MACC #" + maccId, "", "This mutant was not minted yet.");
 				}
 				
 				if(muntantType === 'm2'){
-					return getResultDiv1ImgHTML("images/m2.jpg", "MACC #" + maccId,  "This mutant was not minted yet.");
+					return getResultDiv1ImgHTML("images/m2.jpg", "MACC #" + maccId, "", "This mutant was not minted yet.");
 				}
 			}
 			
@@ -354,7 +400,120 @@
 	}
 	
 	
+	//		
+	 async function getLatestMutations(n){
+		
+	try {
+		
+		// get burned serums
+		
+		burned = await getSerumBurnedEvents();
+		txDetails = [];
 	
+		// find last n events
+		
+        for (var i = 0; i < n; i++) 
+        {
+			var o = new Object();
+			o.serum = burned[i];
+			o.blockNumber = burned[i].blockNumber;
+			o.transactionHash = burned[i].transactionHash ;
+			
+			txDetails.push(o);			
+        }
+		
+		// set smallest block
+		// we get the events descending
+		
+		fBlock = txDetails[n-1].serum.blockNumber;
+		
+		// get mints 
+		
+		mutants = await getMaccMintEvents(fBlock);
+	
+		for (var x = 0; x < n; x++){
+			
+			for(var y = 0; y < mutants.length; y++){
+			
+				if(txDetails[x].serum.transactionHash === mutants[y].transactionHash ){
+				
+					txDetails[x].mutant = mutants[y];
+					
+					if(txDetails[x].serum.returnValues.id === "1"){
+						txDetails[x].serumType = 'm1';
+						txDetails[x].gaccId = _m1_MACC_2_GACC['id' + mutants[y].returnValues.tokenId];
+						txDetails[x].maccId =  mutants[y].returnValues.tokenId;
+					}
+					if(txDetails[x].serum.returnValues.id === "2"){
+						txDetails[x].serumType = 'm2';
+						txDetails[x].gaccId = _m2_MACC_2_GACC['id' + mutants[y].returnValues.tokenId];
+						txDetails[x].maccId =  mutants[y].returnValues.tokenId;
+					}
+					
+					/*
+					console.log("transaction: " + txDetails[x].transactionHash  
+									+ " GACC : " + txDetails[x].gaccId
+									+ " " + txDetails[x].serumType
+									+ " >>> MACC: " + txDetails[x].maccId  
+									);
+					*/
+					break;
+				}	
+			}
+		}
+		
+		
+		 //descending
+			txDetails.sort((a, b) => {
+				return b.blockNumber - a.blockNumber;
+			});
+			
+			block = await getBlock(txDetails[0].blockNumber);
+			
+		
+			html = await getMutantTable(txDetails);
+		
+			document.getElementById("latestBtn").innerHTML = "Last: " + timeSince(block.timestamp);
+			document.getElementById("latestDiv").innerHTML= html;
+		
+
+	
+			} catch (e) {
+				
+				console.log(e);
+			return e;
+	      }  
+	 }		 
+	  
+
+//	
+function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date * 1000) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
 	
 	// ### Web3 calls ###
 	
@@ -422,14 +581,65 @@
              toBlock: 'latest',
            },
             (err, events) => {
-                                            
+              
+			  //descending
+			  events.sort((a, b) => {
+				return b.blockNumber - a.blockNumber;
+			});
+			  
              e = events;
           
 		  });
-                               
+              
+		//console.log(e);	  
+			  
        return e;
                                
       }
+	  
+	  //
+	async function getBlock(blockHashOrBlockNumber){
+	  
+	  var e;
+	  
+	 await _web3.eth.getBlock(blockHashOrBlockNumber, (err, block) => {
+              
+			 e = block;
+          
+		  });
+		  
+		  return e;
+	}
+	  
+	  //
+	  async function getMaccMintEvents(fBlock){
+		  
+		  var e;
+		  
+		   await _maccContract.getPastEvents('Transfer',
+          {
+             filter: {
+                       from: '0x0000000000000000000000000000000000000000'
+					},             
+               fromBlock: fBlock,
+             toBlock: 'latest',
+           },
+            (err, events) => {
+				
+			//descending
+			  events.sort((a, b) => {
+				return b.blockNumber - a.blockNumber;
+			});				
+             e = events;
+          
+		  });
+                
+		//console.log(e);	
+       return e;
+                               
+      }
+		
+	
            
 	// ### OpenSea ###
 		   
@@ -517,6 +727,58 @@
 	}
 	
 	//
+	async function getMutantTable(txDetails){
+		
+		var h = ""
+		
+		for(i = 0; i < txDetails.length; i++) {
+		
+			// get os asset 
+		  apeAsset = await fetchGaccOSasset(txDetails[i].gaccId);
+		  maccAsset = await fetchMaccOSasset(txDetails[i].maccId)
+		
+			h = h +`
+				<div class="row align-items-center">
+					<div class="col  text-center">
+						<a href="https://etherscan.io/tx/${txDetails[i].transactionHash}" target="_blank">
+						<img src="images/etherscan-logo-light-circle.png" style="height: 30px">
+						</a>
+					</div>
+					<div class="col  text-center">
+						<img src="${apeAsset.image_preview_url}"  style="height: 100px;" alt="..." >
+						<br>
+						<span>
+							#${txDetails[i].gaccId}
+							<a href="${apeAsset.permalink}" target="_blank">					  
+								<img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+							</a>
+						</span>	
+					</div>
+					<div class="col  text-center">
+					>>
+						<img src="images/${txDetails[i].serumType}.jpg"  style="height: 100px;" alt="..." >
+					>>
+					</div>
+					<div class="col  text-center">
+						<img src="${maccAsset.image_preview_url}"  style="height: 100px;" alt="..." >
+						<br>
+						<span>
+							#${txDetails[i].maccId}
+							<a href="${maccAsset.permalink}" target="_blank">					  
+								<img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+							</a>
+						</span>	
+					</div>
+					
+				</div>
+			`;
+		}
+		
+		return h;
+		
+	}
+	
+	//
 	function getStatsDivHTML(numM1, numM2, numM3){
 	
 		return `
@@ -540,17 +802,24 @@
 	}
 	
 	//
-	function getResultDiv3ImgHTML(img1, txt1, img2, txt2,img3, txt3){
+	function getResultDiv3ImgHTML(img1, txt1, osLnk1, img2, txt2, osLnk2, img3, txt3, osLnk3){
 	
-		return `
+		var h =  `
 		<div class="row align-items-center">
-			<div class="col ">				
+			<div class="col text-center">				
 				
 			<img src="${img1}" style="height: 150px;"  alt="..." >
 				<span>
-				 <br>${txt1}
+				 <br>${txt1}`;
+				 
+			if(osLnk1){
+			  h =  h + ` <a href="${osLnk1}" target="_blank">
+				 <img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+				 </a>`;
+			}				
+			
+			h =  h + ` 			
 				</span>
-				
 			</div>
 			
 			<div class="col">
@@ -559,7 +828,18 @@
 			   <div class="col">
 			    
 				<img src="${img2}"  style="height: 100px;" alt="..." >
-				 <br><span>${txt2}</span>
+				 <br><span>${txt2}`;
+				 
+				 if(osLnk2){
+					  h =  h + `
+					<a href="${osLnk2}" target="_blank">					  
+					  <img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+					  </a>
+					  `;
+				 }
+				 
+				h =  h + ` 
+				 </span>			 
 			   </div>
 			  </div>
 			  
@@ -567,26 +847,46 @@
 			   <div class="col">
 			   
 				<img src="${img3}"  style="height: 100px;" alt="..." >
-				<br><span>${txt3}</span>
+				<br><span>${txt3}
+				`;
+				 if(osLnk3){
+					 h =  h + `
+						<a href="${osLnk3}" target="_blank">
+				<img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+				</a>
+				`;
+				 }
+			
+			h =  h + ` 		
+				</span>	
 			  </div>
-			 </div>
-			  	
-			  
+			 </div>  
 			</div>
 		</div>
 		`;
+		
+		return h;
 	}
 	
-//	
-function getResultDiv2ImgHTML(img1, txt1, img2, txt2){
 	
-		return `
+//	
+function getResultDiv2ImgHTML(img1, txt1, osLnk1, img2, txt2, osLnk2){
+	
+		var h = `
 		<div class="row align-items-center">
 			<div class="col ">				
 				
 			<img src="${img1}" style="height: 150px;"  alt="..." >
 				<span>
-				 <br>${txt1}
+				 <br>${txt1}`;
+				 
+			if(osLnk1){
+			  h =  h + ` <a href="${osLnk1}" target="_blank">
+				 <img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+				 </a>`;
+			}				
+			
+			h =  h + ` 			
 				</span>
 				
 			</div>
@@ -595,23 +895,47 @@ function getResultDiv2ImgHTML(img1, txt1, img2, txt2){
 			<img src="${img2}" style="height: 150px;"  alt="..." >
 				<span>
 				 <br>${txt2}
+				 `;
+				 
+			 if(osLnk2){
+					  h =  h + `
+					<a href="${osLnk2}" target="_blank">					  
+					  <img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+					  </a>
+					  `;
+				 }
+				 
+				h =  h + ` 	 
 				</span>
 		
 			</div>
 		</div>
 		`;
+		
+		return h;
 	}	
 	
 //
-function getResultDiv1ImgHTML(img1, txt1,  txt2){
+function getResultDiv1ImgHTML(img1, txt1, osLnk1, txt2){
 	
-		return `
+		var h =  `
 		<div class="row align-items-center">
 			<div class="col ">				
 				
 			<img src="${img1}" style="height: 150px;"  alt="..." >
 				<span>
 				 <br>${txt1}
+			`;	 
+			
+			if(osLnk1){
+			  h =  h + `		
+				 <a href="${osLnk1}" target="_blank">					  
+					  <img src="images/os.png" style="height: 30px; padding: 4px;"  alt="..." >
+					  </a>
+					  `;
+			} 
+			
+		h =  h + `				
 				</span>
 				
 			</div>
@@ -624,5 +948,7 @@ function getResultDiv1ImgHTML(img1, txt1,  txt2){
 			</div>
 		</div>
 		`;
+		
+		return h;
 	}	
 	
