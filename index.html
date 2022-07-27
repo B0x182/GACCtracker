@@ -42,12 +42,28 @@
 	<div class="row align-items-center mt-3">    
 		
 		<img src="images/MACC_LOGO_small.png" class="img-fluid" alt="Responsive image" >
+		
+	</div>
+	
+	<div class="row">
+		<div class="col-md-4 text-md-start">
+				<a onclick="toggle()" href="#" id="backBtn" style="display: none;"> Back</a>
+        </div>
+		<div class="col-md-4">
 		<h4 class="text-center bayc-color">TRACKER</h4>
+		</div>
+		
+		<div class="col-md-4 text-md-end" >
+			<a onclick="toggle()" href="#" id="latestBtn"> Last: ??...</a>
+			 
+        </div>
 	</div>
 	
 	<div class="row my-3">
 		<div class="col" id ="statsDiv"></span></div>
 	</div>
+	
+	<div id ="searchDiv">
 	
 	<p class="lead  my-3">
     Checks whether a serum was drunk for the entered GACC number, and searches for the mutated MACC.
@@ -96,12 +112,17 @@
 	<div class="row">
 		<div class="col  text-center" id ="resultDiv"><span class="bayc-color">... enter number ...</span></div>
 	</div>
+
+	</div>
 	
+	<!-- latest -->
+	
+	<div id ="latestDiv" style="display: none;">
+
+	</div>
+
 	<hr>
-
 	
-
- 
  <!-- footer -->
  
  <p class="lead  my-3">
@@ -123,7 +144,7 @@
                 <p>Copyright &copy; B0x182</p>
             </div>
             <div class="col-md-6 text-md-end">
-				v 2.0
+				v 3.0
 				<span class="text-muted mx-2">|</span> 
                 <a href="https://github.com/B0x182" target="_blank">Github</a> 
                 <span class="text-muted mx-2">|</span> 
