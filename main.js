@@ -31,7 +31,7 @@
 	 getSerumStats();
 	
 	// get latest mutants
-	 getLatestMutations(10);
+	 getLatestMutations(5);
 	 	
 	
 	}
@@ -76,7 +76,14 @@
 				l.style.display = "block";
 			} else {
 			l.style.display = "none";
-			}		
+			}	
+
+	var i = document.getElementById("latestInfo");
+			if (i.style.display === "none") {
+				i.style.display = "block";
+			} else {
+			i.style.display = "none";
+			}				
 		
 	var y = document.getElementById("latestDiv");
 			if (y.style.display === "none") {
@@ -450,6 +457,12 @@
 						txDetails[x].maccId =  mutants[y].returnValues.tokenId;
 					}
 					
+					//
+					block = await getBlock(txDetails[x].blockNumber);					
+					txDetails[x].timestamp = new Date(block.timestamp * 1000).toGMTString();
+					
+					
+					
 					/*
 					console.log("transaction: " + txDetails[x].transactionHash  
 									+ " GACC : " + txDetails[x].gaccId
@@ -468,12 +481,12 @@
 				return b.blockNumber - a.blockNumber;
 			});
 			
-			block = await getBlock(txDetails[0].blockNumber);
 			
-		
+			block = await getBlock(txDetails[0].blockNumber);
+
 			html = await getMutantTable(txDetails);
 		
-			document.getElementById("latestBtn").innerHTML = "Last: " + timeSince(block.timestamp);
+			document.getElementById("latestInfo").innerHTML = "Last: " + timeSince(block.timestamp);
 			document.getElementById("latestDiv").innerHTML= html;
 		
 
@@ -741,8 +754,10 @@ function timeSince(date) {
 				<div class="row align-items-center">
 					<div class="col  text-center">
 						<a href="https://etherscan.io/tx/${txDetails[i].transactionHash}" target="_blank">
-						<img src="images/etherscan-logo-light-circle.png" style="height: 30px">
+						<img src="images/etherscan-logo-light-circle.png" style="height: 30px" alt="...">
 						</a>
+						<br>
+						${txDetails[i].timestamp}
 					</div>
 					<div class="col  text-center">
 						<img src="${apeAsset.image_preview_url}"  style="height: 100px;" alt="..." >
