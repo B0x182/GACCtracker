@@ -28,6 +28,29 @@
    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(191, 197, 0, 1);
 }
 		
+
+.marquee-horizontal {
+ overflow: hidden;
+  position: relative;
+}
+		
+		
+
+.track-horizontal {
+
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-horizontal 5s linear infinite;
+  /* manipulate the speed of the marquee by changing "40s" line above*/
+}
+
+@keyframes marquee-horizontal {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+
+		
 		
 	</style>
 
@@ -37,20 +60,40 @@
    
 <div class="container " style="max-width: 720px">
 
-	<!-- header -->
+	<!-- header 
 
 	<div class="row align-items-center mt-3">    
 		
 		<img src="images/MACC_LOGO_small.png" class="img-fluid" alt="Responsive image" >
 		
 	</div>
+	-->
+	
+	<div class="row mt-3">   
+	<div class="marquee-horizontal">    
+		<div class="track-horizontal">    
+			<img src="images/MACC_LOGO_small.png" style="height: 150px;"  alt="..." >
+		
+			<img src="images/MACC_LOGO_small.png" style="height: 150px;"  alt="..." >
+			
+			<img src="images/MACC_LOGO_small.png" style="height: 150px;"  alt="..." >
+			
+			<img src="images/MACC_LOGO_small.png" style="height: 150px;"  alt="..." >
+			
+			<img src="images/MACC_LOGO_small.png" style="height: 150px;"  alt="..." >
+			
+		</div>
+	</div>
+	</div>
+	
+	
 	
 	<div class="row">
 		<div class="col-md-4 text-center">
 				<a onclick="toggle()" href="#" id="backBtn" style="display: none;"> Back</a>
         </div>
 		<div class="col-md-4">
-		<h4 class="text-center bayc-color">TRACKER</h4>
+		<h4 class="text-center bayc-color">Serums</h4>
 		</div>
 		
 		<div class="col-md-4 text-center" >
@@ -62,6 +105,8 @@
 	<div class="row my-3">
 		<div class="col" id ="statsDiv"></span></div>
 	</div>
+	
+	<hr>
 	
 	<div id ="searchDiv">
 	
@@ -144,7 +189,7 @@
                 <p>Copyright &copy; B0x182</p>
             </div>
             <div class="col-md-6 text-md-end">
-				v 3.1
+				v 3.2
 				<span class="text-muted mx-2">|</span> 
                 <a href="https://github.com/B0x182" target="_blank">Github</a> 
                 <span class="text-muted mx-2">|</span> 
