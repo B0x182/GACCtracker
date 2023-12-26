@@ -659,9 +659,14 @@ function timeSince(date) {
 	//
 	async function fetchGaccOSasset(apeId){
 
+		const options = {
+		method: 'GET',
+		headers: {accept: 'application/json', 'X-API-KEY': 'd44f0f5e85474af19162f2dbb485eaa5'}
+	  };
+		
 	var asset;		
 	
-		await fetch('https://api.opensea.io/api/v1/asset/0x4b103d07c18798365946e76845edc6b565779402/' + apeId)
+		await fetch('https://api.opensea.io/api/v1/asset/0x4b103d07c18798365946e76845edc6b565779402/' + apeId, options)
 		 .then(result1 => result1.json())
 		 .then((output1) => {
         
@@ -676,9 +681,14 @@ function timeSince(date) {
 	//
 	async function fetchMaccOSasset(apeId){
 
+	const options = {
+		method: 'GET',
+		headers: {accept: 'application/json', 'X-API-KEY': 'd44f0f5e85474af19162f2dbb485eaa5'}
+	  };
+		
 	var asset;		
 	
-		await fetch('https://api.opensea.io/api/v1/asset/0xad0db7368cdfbd3153f7dfaca51a78eeb39f6d71/' + apeId)
+		await fetch('https://api.opensea.io/api/v1/asset/0xad0db7368cdfbd3153f7dfaca51a78eeb39f6d71/' + apeId, options)
 		 .then(result1 => result1.json())
 		 .then((output1) => {
         
